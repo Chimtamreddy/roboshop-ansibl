@@ -1,0 +1,26 @@
+
+- name: Create Mongo Repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Disable NodeJS
+  ansible.builtin.shell: dnf module disable nodejs -y
+
+- name: Enable NodeJS
+  ansible.builtin.shell: dnf module enable nodejs:18 -y
+
+- name: Install NodeJS
+  ansible.builtin.dnf:
+    name: nodejs
+    state: installed
+
+- name: Setup App Prerequisites
+  ansible.builtin.import_tasks: app-preq.yml
+
+
+- name: Schecma Setup
+  ansible.builtin.import_tasks: schema-setup.yml
+
+- name: Setup SystemD Service
+  ansible.builtin.import_tasks: systemd-setup.yml

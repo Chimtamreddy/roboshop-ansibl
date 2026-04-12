@@ -1,0 +1,5 @@
+- name: Install Mongod
+  ansible.builtin.shell: dnf install mongodb-org-shell -y
+
+- name: Load Schema
+  ansible.builtin.shell: mongo --host mongodb-dev.anysite.info </app/schema/{{component}}.js
