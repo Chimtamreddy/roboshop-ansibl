@@ -1,23 +1,27 @@
-- name: Create Yum Repo file for MySQL
-  ansible.builtin.copy:
-    src: mysql.repo
-    dest: /etc/yum.repos.d/mysql.repo
+- name: MySQL Setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create Yum Repo file for MySQL
+      ansible.builtin.copy:
+        src: mysql.repo
+        dest: /etc/yum.repos.d/mysql.repo
 
-- name: Disable MySQL
-  ansible.builtin.shell: dnf module disable mysql -y
+    - name: Disable MySQL
+      ansible.builtin.shell: dnf module disable mysql -y
 
-- name: Install MySQL
-  ansible.builtin.dnf:
-    name: mysql-community-server
-    state: installed
+    - name: Install MySQL
+      ansible.builtin.dnf:
+        name: mysql-community-server
+        state: installed
 
-- name: Restarted MySQL
-  ansible.builtin.systemd:
-    name: mysqld
-    state: restarted
-    enabled: yes
+    - name: Restarted MySQL
+      ansible.builtin.systemd:
+        name: mysqld
+        state: restarted
+        enabled: yes
 
-- name: MySQL root password
-  ansible.builtin.shell: mysql_secure_installation --set-root-pass RoboShop@1
+    - name: MySQL root password
+      ansible.builtin.shell: mysql_secure_installation --set-root-pass RoboShop@1
 
 
