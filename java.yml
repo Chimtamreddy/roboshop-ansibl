@@ -1,20 +1,13 @@
-
-- name: Disable NodeJS
-  ansible.builtin.shell: dnf module disable nodejs -y
-
-- name: Enable NodeJS
-  ansible.builtin.shell: dnf module enable nodejs:18 -y
-
-- name: Install NodeJS
+- name: Install Maven
   ansible.builtin.dnf:
-    name: nodejs
+    name: maven
     state: installed
 
 - name: Setup App Prerequisites
   ansible.builtin.import_tasks: app-preq.yml
 
-- name: Install NodeJS Dependencies
-  ansible.builtin.shell: npm install
+- name: Install Maven Dependencies
+  ansible.builtin.shell: mvn clean package ; mv target/shipping-1.0.jar shipping.jar
   args:
     chdir: /app
 
@@ -25,3 +18,4 @@
 
 - name: Setup SystemD Service
   ansible.builtin.import_tasks: systemd-setup.yml
+
