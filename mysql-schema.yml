@@ -1,8 +1,6 @@
 
 - name: Install MySQL
-  ansible.builtin.dnf:
-    name: mysql
-    state: installed
+  ansible.builtin.shell: dnf install mysql -y
 
 - name: Load MySQL Schema
   ansible.builtin.shell: mysql -h mysql-dev.anysite.info -uroot -pRoboShop@1 < /app/schema/{{component}}.sql
