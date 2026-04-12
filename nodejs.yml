@@ -1,9 +1,4 @@
 
-- name: Create Mongo Repo
-  ansible.builtin.copy:
-    src: mongo.repo
-    dest: /etc/yum.repos.d/mongo.repo
-
 - name: Disable NodeJS
   ansible.builtin.shell: dnf module disable nodejs -y
 
@@ -17,6 +12,11 @@
 
 - name: Setup App Prerequisites
   ansible.builtin.import_tasks: app-preq.yml
+
+- name: Install NodeJS Dependencies
+  ansible.builtin.shell: npm install
+  args:
+    chdir: /app
 
 
 - name: Schecma Setup
