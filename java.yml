@@ -13,7 +13,7 @@
 
 
 - name: Schecma Setup
-  ansible.builtin.import_tasks: schema-setup.yml
+  ansible.builtin.import_tasks: mysql-schema.yml
   when: schema is defined
 
 - name: Setup SystemD Service
