@@ -1,7 +1,6 @@
 
 - name: Create Application User
-  ansible.builtin.user:
-    name: roboshop
+  ansible.builtin.shell:
     id: roboshop
 
 - name: Delete a directory
